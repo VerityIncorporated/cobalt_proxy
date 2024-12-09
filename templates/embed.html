@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    {{#if error_message}}
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Error">
+        <meta property="og:description" content="{{error_message}}">
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="Error">
+        <meta name="twitter:description" content="{{error_message}}">
+    {{else}}
+        {{#if is_video}}
+            <meta property="og:type" content="video.other">
+            <meta property="og:video" content="{{url}}">
+            <meta property="og:title" content="{{filename}}">
+            <meta property="og:url" content="{{url}}">
+            
+            <meta name="twitter:card" content="player">
+            <meta name="twitter:video" content="{{url}}">
+            <meta name="twitter:title" content="{{filename}}">
+            <meta name="twitter:url" content="{{url}}">
+        {{else}}
+            <meta property="og:type" content="image">
+            <meta property="og:image" content="{{url}}">
+            <meta property="og:title" content="{{filename}}">
+            <meta property="og:url" content="{{url}}">
+            
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:image" content="{{url}}">
+            <meta name="twitter:title" content="{{filename}}">
+            <meta name="twitter:url" content="{{url}}">
+        {{/if}}
+    {{/if}}
+
+    <title>{{#if error_message}}Error{{else}}{{filename}}{{/if}}</title>
+</head>
+
+<body class="bg-black text-white overflow-hidden">
+    <div class="container mx-auto p-4">
+        {{#if error_message}}
+            <div class="flex flex-col items-center justify-center h-screen">
+                <h1 class="text-4xl font-bold text-red-600">Error</h1>
+                <p class="mt-4 text-lg">{{error_message}}</p>
+            </div>
+        {{else}}
+            {{#if is_video}}
+                <div class="flex flex-col items-center justify-center min-h-screen">
+                    <h1 class="text-2xl font-semibold mb-4 text-center break-words">{{filename}}</h1>
+                    <div class="w-full max-w-3xl">
+                        <video controls class="rounded-lg shadow-lg w-full max-h-[75vh]">
+                            <source src="{{url}}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            {{else}}
+                <div class="flex flex-col items-center justify-center min-h-screen">
+                    <h1 class="text-2xl font-semibold mb-4 text-center break-words">{{filename}}</h1>
+                    <div class="w-full max-w-3xl">
+                        <img src="{{url}}" alt="{{filename}}" class="rounded-lg shadow-lg w-full max-h-[75vh] object-contain">
+                    </div>
+                </div>
+            {{/if}}
+        {{/if}}
+    </div>
+</body>
+
+</html>

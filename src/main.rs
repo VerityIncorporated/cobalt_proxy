@@ -12,6 +12,8 @@ use routes::embed_video;
 async fn main() -> std::io::Result<()> {
     dotenv().ok();
 
+    println!("Running!");
+
     let file_deletion_queue = initialize_file_deletion_worker();
 
     let mut handlebars = Handlebars::new();

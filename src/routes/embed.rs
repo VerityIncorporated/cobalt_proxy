@@ -1,6 +1,6 @@
 use std::{env, path::Path};
 
-use actix_web::{get, web, HttpRequest, HttpResponse, Responder};
+use actix_web::{get, http::header, web, HttpRequest, HttpResponse, Responder};
 use chrono::Utc;
 use handlebars::Handlebars;
 use tokio::{fs::File, io::AsyncWriteExt};
@@ -74,7 +74,7 @@ pub async fn embed_video(
                     
                     let mut context = std::collections::HashMap::new();
                     context.insert("filename", filename.clone());
-                    context.insert("url", format!("/downloads/{}", filename));
+                    context.insert("url", format!("{}/downloads/{}", req.headers().get(header::HOST).unwrap().to_str().unwrap(), filename));
                     context.insert("is_video", is_video.to_string());
                     context.insert("error_message", String::new());
 
